@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Ehealth.Models.doctor>
+
+@{
+    
+    ViewBag.Title = "Index";
+    if (Session["UserID"] == null)
+    {
+        Response.Redirect("~/user/Login");
+        @*<h4>Hello @Session["UserName"].ToString()</h4>*@
+    }
+}
+
+<h2>Index</h2>
+@*@{
+    Layout = "~/Views/Manage/_Layout.cshtml";
+}*@
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.doctorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.availableTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.availableDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.doctorContact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.doctorEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.speciality.specialityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.doctorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.availableTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.availableDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.doctorContact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.doctorEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.speciality.specialityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.user.username)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

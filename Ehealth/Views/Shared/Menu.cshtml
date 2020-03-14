@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-nav">
+        <li>@Html.ActionLink("Home", "Index", "Login", routeValues: null, htmlAttributes: new { id = "homeLink" })</li>
+        <li>@Html.ActionLink("User", "Index", "user", routeValues: null, htmlAttributes: new { id = "userLink" })</li>
+
+        <li>@Html.ActionLink("Doctor", "Index", "doctor", routeValues: null, htmlAttributes: new { id = "doctorLink" })</li>
+        <li>@Html.ActionLink("Speciality", "Index", "speciality", routeValues: null, htmlAttributes: new { id = "specialityLink" })</li>
+        <li>@Html.ActionLink("Test Types", "Index", "test_type", routeValues: null, htmlAttributes: new { id = "testLink" })</li>
+        <li>@Html.ActionLink("Hospital", "Index", "hospital", routeValues: null, htmlAttributes: new { id = "hospitalLink" })</li>
+
+        <li>@Html.ActionLink("Logout", "Logout", "user", routeValues: null, htmlAttributes: new { id = "logoutLink" })</li>
+    </ul>
+}

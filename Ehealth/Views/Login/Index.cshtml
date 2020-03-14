@@ -1,0 +1,17 @@
+﻿
+@{
+   ViewBag.Title = "Index";
+    if (Session["UserID"] == null)
+    {
+        Response.Redirect("~/user/Login");
+    }
+}
+
+<body>
+    <div>
+    
+    <h3>Welcome to Ehealth System @Session["Username"].ToString()</h3>
+    </div>
+    @*<a href="@Url.Action("Logout","user")">Logout</a>*@
+</body>
+

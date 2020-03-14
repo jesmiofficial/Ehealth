@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Ehealth.Models.patient>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.patientNhsNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patientContact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patientEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patientDob)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.patientAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arrivalDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.followUps)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.doctor.doctorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.doctor1.doctorName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.history.historyDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hospital.hospitalName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.test_results.patientNhsNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.test_types.testName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientNhsNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientContact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientDob)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.patientAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.arrivalTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.arrivalDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.followUps)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.doctor.doctorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.doctor1.doctorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.history.historyDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hospital.hospitalName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.test_results.patientNhsNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.test_types.testName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="56dba8ab257a40f4aae71733cd89d97a" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.appointment" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.doctor" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.history" Width="1.5" PointX="10.5" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.hospital" Width="1.5" PointX="6" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.patient" Width="1.5" PointX="8.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.speciality" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.test_results" Width="1.5" PointX="13.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.test_types" Width="1.5" PointX="11.25" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.user" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__appointme__docto__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__appointme__patie__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__doctors__special__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__doctors__user_id__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__doctor__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__doctor__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__histories__patie__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__histor__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__hospit__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__test_r__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__patients__test_t__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__test_resu__patie__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__test_resu__test___440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__test_resu__user___44FF419A" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

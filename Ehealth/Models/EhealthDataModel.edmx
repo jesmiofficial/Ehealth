@@ -1,0 +1,834 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="appointments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="doctor_id" Type="int" Nullable="false" />
+          <Property Name="patient_id" Type="int" Nullable="false" />
+          <Property Name="apptDate" Type="date" Nullable="false" />
+          <Property Name="apptStartTime" Type="datetime" Nullable="false" />
+          <Property Name="apptEndTime" Type="datetime" Nullable="false" />
+          <Property Name="isCancelled" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="doctors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="doctorName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="speciality_id" Type="int" Nullable="false" />
+          <Property Name="availableTime" Type="datetime" Nullable="false" />
+          <Property Name="availableDate" Type="date" Nullable="false" />
+          <Property Name="doctorContact" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="doctorEmail" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="histories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="patient_id" Type="int" Nullable="false" />
+          <Property Name="patientNhsNo" Type="int" Nullable="false" />
+          <Property Name="historyDetails" Type="varchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hospital">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hospitalName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="patients">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="patientNhsNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patientName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patientContact" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="patientEmail" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="patientDob" Type="datetime" Nullable="false" />
+          <Property Name="patientAddress" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="hospital_id" Type="int" Nullable="false" />
+          <Property Name="arrivalTime" Type="datetime" Nullable="false" />
+          <Property Name="arrivalDate" Type="date" Nullable="false" />
+          <Property Name="history_id" Type="int" Nullable="false" />
+          <Property Name="test_result_id" Type="int" Nullable="false" />
+          <Property Name="test_type_id" Type="int" Nullable="false" />
+          <Property Name="doctor_id" Type="int" Nullable="false" />
+          <Property Name="followUps" Type="varchar" MaxLength="35" Nullable="false" />
+        </EntityType>
+        <EntityType Name="specialities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="specialityName" Type="varchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="test_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="patient_id" Type="int" Nullable="false" />
+          <Property Name="patientNhsNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="test_type_id" Type="int" Nullable="false" />
+          <Property Name="result" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="test_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="testName" Type="varchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__appointme__docto__398D8EEE">
+          <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__appointme__patie__3A81B327">
+          <End Role="patients" Type="Self.patients" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__doctors__special__3B75D760">
+          <End Role="specialities" Type="Self.specialities" Multiplicity="1" />
+          <End Role="doctors" Type="Self.doctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="specialities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="doctors">
+              <PropertyRef Name="speciality_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__doctors__user_id__3C69FB99">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="doctors" Type="Self.doctors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="doctors">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__histories__patie__3D5E1FD2">
+          <End Role="patients" Type="Self.patients" Multiplicity="1" />
+          <End Role="histories" Type="Self.histories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="histories">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__doctor__2C3393D0">
+          <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__doctor__412EB0B6">
+          <End Role="doctors" Type="Self.doctors" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__histor__4222D4EF">
+          <End Role="histories" Type="Self.histories" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="histories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="history_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__hospit__3E52440B">
+          <End Role="hospital" Type="Self.hospital" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hospital">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="hospital_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__test_r__3F466844">
+          <End Role="test_results" Type="Self.test_results" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="test_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__test_t__403A8C7D">
+          <End Role="test_types" Type="Self.test_types" Multiplicity="1" />
+          <End Role="patients" Type="Self.patients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__patie__4316F928">
+          <End Role="patients" Type="Self.patients" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__test___440B1D61">
+          <End Role="test_types" Type="Self.test_types" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__user___44FF419A">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="appointments" EntityType="Self.appointments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doctors" EntityType="Self.doctors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="histories" EntityType="Self.histories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hospital" EntityType="Self.hospital" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="patients" EntityType="Self.patients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="specialities" EntityType="Self.specialities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test_results" EntityType="Self.test_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="test_types" EntityType="Self.test_types" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__appointme__docto__398D8EEE" Association="Self.FK__appointme__docto__398D8EEE">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__appointme__patie__3A81B327" Association="Self.FK__appointme__patie__3A81B327">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__doctors__special__3B75D760" Association="Self.FK__doctors__special__3B75D760">
+            <End Role="specialities" EntitySet="specialities" />
+            <End Role="doctors" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__doctors__user_id__3C69FB99" Association="Self.FK__doctors__user_id__3C69FB99">
+            <End Role="users" EntitySet="users" />
+            <End Role="doctors" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__histories__patie__3D5E1FD2" Association="Self.FK__histories__patie__3D5E1FD2">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="histories" EntitySet="histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__doctor__2C3393D0" Association="Self.FK__patients__doctor__2C3393D0">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__doctor__412EB0B6" Association="Self.FK__patients__doctor__412EB0B6">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__histor__4222D4EF" Association="Self.FK__patients__histor__4222D4EF">
+            <End Role="histories" EntitySet="histories" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__hospit__3E52440B" Association="Self.FK__patients__hospit__3E52440B">
+            <End Role="hospital" EntitySet="hospital" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__test_r__3F466844" Association="Self.FK__patients__test_r__3F466844">
+            <End Role="test_results" EntitySet="test_results" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__test_t__403A8C7D" Association="Self.FK__patients__test_t__403A8C7D">
+            <End Role="test_types" EntitySet="test_types" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__patie__4316F928" Association="Self.FK__test_resu__patie__4316F928">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__test___440B1D61" Association="Self.FK__test_resu__test___440B1D61">
+            <End Role="test_types" EntitySet="test_types" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__user___44FF419A" Association="Self.FK__test_resu__user___44FF419A">
+            <End Role="users" EntitySet="users" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="appointment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="doctor_id" Type="Int32" Nullable="false" />
+          <Property Name="patient_id" Type="Int32" Nullable="false" />
+          <Property Name="apptDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="apptStartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="apptEndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isCancelled" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="doctor" Relationship="Self.FK__appointme__docto__398D8EEE" FromRole="appointments" ToRole="doctors" />
+          <NavigationProperty Name="patient" Relationship="Self.FK__appointme__patie__3A81B327" FromRole="appointments" ToRole="patients" />
+        </EntityType>
+        <EntityType Name="doctor">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="doctorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="speciality_id" Type="Int32" Nullable="false" />
+          <Property Name="availableTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="availableDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="doctorContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="doctorEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__docto__398D8EEE" FromRole="doctors" ToRole="appointments" />
+          <NavigationProperty Name="speciality" Relationship="Self.FK__doctors__special__3B75D760" FromRole="doctors" ToRole="specialities" />
+          <NavigationProperty Name="user" Relationship="Self.FK__doctors__user_id__3C69FB99" FromRole="doctors" ToRole="users" />
+          <NavigationProperty Name="patients" Relationship="Self.FK__patients__doctor__2C3393D0" FromRole="doctors" ToRole="patients" />
+          <NavigationProperty Name="patients1" Relationship="Self.FK__patients__doctor__412EB0B6" FromRole="doctors" ToRole="patients" />
+        </EntityType>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="patient_id" Type="Int32" Nullable="false" />
+          <Property Name="patientNhsNo" Type="Int32" Nullable="false" />
+          <Property Name="historyDetails" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="patient" Relationship="Self.FK__histories__patie__3D5E1FD2" FromRole="histories" ToRole="patients" />
+          <NavigationProperty Name="patients" Relationship="Self.FK__patients__histor__4222D4EF" FromRole="histories" ToRole="patients" />
+        </EntityType>
+        <EntityType Name="hospital">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hospitalName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="patients" Relationship="Self.FK__patients__hospit__3E52440B" FromRole="hospital" ToRole="patients" />
+        </EntityType>
+        <EntityType Name="patient">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="patientNhsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patientContact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patientEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patientDob" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="patientAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hospital_id" Type="Int32" Nullable="false" />
+          <Property Name="arrivalTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="arrivalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="history_id" Type="Int32" Nullable="false" />
+          <Property Name="test_result_id" Type="Int32" Nullable="false" />
+          <Property Name="test_type_id" Type="Int32" Nullable="false" />
+          <Property Name="doctor_id" Type="Int32" Nullable="false" />
+          <Property Name="followUps" Type="String" MaxLength="35" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="appointments" Relationship="Self.FK__appointme__patie__3A81B327" FromRole="patients" ToRole="appointments" />
+          <NavigationProperty Name="doctor" Relationship="Self.FK__patients__doctor__2C3393D0" FromRole="patients" ToRole="doctors" />
+          <NavigationProperty Name="doctor1" Relationship="Self.FK__patients__doctor__412EB0B6" FromRole="patients" ToRole="doctors" />
+          <NavigationProperty Name="histories" Relationship="Self.FK__histories__patie__3D5E1FD2" FromRole="patients" ToRole="histories" />
+          <NavigationProperty Name="history" Relationship="Self.FK__patients__histor__4222D4EF" FromRole="patients" ToRole="histories" />
+          <NavigationProperty Name="hospital" Relationship="Self.FK__patients__hospit__3E52440B" FromRole="patients" ToRole="hospital" />
+          <NavigationProperty Name="test_results" Relationship="Self.FK__patients__test_r__3F466844" FromRole="patients" ToRole="test_results" />
+          <NavigationProperty Name="test_types" Relationship="Self.FK__patients__test_t__403A8C7D" FromRole="patients" ToRole="test_types" />
+          <NavigationProperty Name="test_results1" Relationship="Self.FK__test_resu__patie__4316F928" FromRole="patients" ToRole="test_results" />
+        </EntityType>
+        <EntityType Name="speciality">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="specialityName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="doctors" Relationship="Self.FK__doctors__special__3B75D760" FromRole="specialities" ToRole="doctors" />
+        </EntityType>
+        <EntityType Name="test_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="patient_id" Type="Int32" Nullable="false" />
+          <Property Name="patientNhsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="test_type_id" Type="Int32" Nullable="false" />
+          <Property Name="result" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="patients" Relationship="Self.FK__patients__test_r__3F466844" FromRole="test_results" ToRole="patients" />
+          <NavigationProperty Name="patient" Relationship="Self.FK__test_resu__patie__4316F928" FromRole="test_results" ToRole="patients" />
+          <NavigationProperty Name="test_types" Relationship="Self.FK__test_resu__test___440B1D61" FromRole="test_results" ToRole="test_types" />
+          <NavigationProperty Name="user" Relationship="Self.FK__test_resu__user___44FF419A" FromRole="test_results" ToRole="users" />
+        </EntityType>
+        <EntityType Name="test_types">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="testName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="patients" Relationship="Self.FK__patients__test_t__403A8C7D" FromRole="test_types" ToRole="patients" />
+          <NavigationProperty Name="test_results" Relationship="Self.FK__test_resu__test___440B1D61" FromRole="test_types" ToRole="test_results" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="doctors" Relationship="Self.FK__doctors__user_id__3C69FB99" FromRole="users" ToRole="doctors" />
+          <NavigationProperty Name="test_results" Relationship="Self.FK__test_resu__user___44FF419A" FromRole="users" ToRole="test_results" />
+        </EntityType>
+        <Association Name="FK__appointme__docto__398D8EEE">
+          <End Role="doctors" Type="Self.doctor" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__appointme__patie__3A81B327">
+          <End Role="patients" Type="Self.patient" Multiplicity="1" />
+          <End Role="appointments" Type="Self.appointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="appointments">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__doctors__special__3B75D760">
+          <End Role="specialities" Type="Self.speciality" Multiplicity="1" />
+          <End Role="doctors" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="specialities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="doctors">
+              <PropertyRef Name="speciality_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__doctors__user_id__3C69FB99">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="doctors" Type="Self.doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="doctors">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__doctor__2C3393D0">
+          <End Role="doctors" Type="Self.doctor" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__doctor__412EB0B6">
+          <End Role="doctors" Type="Self.doctor" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doctors">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="doctor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__histories__patie__3D5E1FD2">
+          <End Role="patients" Type="Self.patient" Multiplicity="1" />
+          <End Role="histories" Type="Self.history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="histories">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__histor__4222D4EF">
+          <End Role="histories" Type="Self.history" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="histories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="history_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__hospit__3E52440B">
+          <End Role="hospital" Type="Self.hospital" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hospital">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="hospital_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__test_r__3F466844">
+          <End Role="test_results" Type="Self.test_results" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_results">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="test_result_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__patients__test_t__403A8C7D">
+          <End Role="test_types" Type="Self.test_types" Multiplicity="1" />
+          <End Role="patients" Type="Self.patient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="patients">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__patie__4316F928">
+          <End Role="patients" Type="Self.patient" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="patients">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="patient_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__test___440B1D61">
+          <End Role="test_types" Type="Self.test_types" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="test_types">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="test_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__test_resu__user___44FF419A">
+          <End Role="users" Type="Self.user" Multiplicity="1" />
+          <End Role="test_results" Type="Self.test_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="test_results">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EhealthContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="appointments" EntityType="Self.appointment" />
+          <EntitySet Name="doctors" EntityType="Self.doctor" />
+          <EntitySet Name="histories" EntityType="Self.history" />
+          <EntitySet Name="hospitals" EntityType="Self.hospital" />
+          <EntitySet Name="patients" EntityType="Self.patient" />
+          <EntitySet Name="specialities" EntityType="Self.speciality" />
+          <EntitySet Name="test_results" EntityType="Self.test_results" />
+          <EntitySet Name="test_types" EntityType="Self.test_types" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK__appointme__docto__398D8EEE" Association="Self.FK__appointme__docto__398D8EEE">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__appointme__patie__3A81B327" Association="Self.FK__appointme__patie__3A81B327">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="appointments" EntitySet="appointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__doctors__special__3B75D760" Association="Self.FK__doctors__special__3B75D760">
+            <End Role="specialities" EntitySet="specialities" />
+            <End Role="doctors" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__doctors__user_id__3C69FB99" Association="Self.FK__doctors__user_id__3C69FB99">
+            <End Role="users" EntitySet="users" />
+            <End Role="doctors" EntitySet="doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__doctor__2C3393D0" Association="Self.FK__patients__doctor__2C3393D0">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__doctor__412EB0B6" Association="Self.FK__patients__doctor__412EB0B6">
+            <End Role="doctors" EntitySet="doctors" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__histories__patie__3D5E1FD2" Association="Self.FK__histories__patie__3D5E1FD2">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="histories" EntitySet="histories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__histor__4222D4EF" Association="Self.FK__patients__histor__4222D4EF">
+            <End Role="histories" EntitySet="histories" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__hospit__3E52440B" Association="Self.FK__patients__hospit__3E52440B">
+            <End Role="hospital" EntitySet="hospitals" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__test_r__3F466844" Association="Self.FK__patients__test_r__3F466844">
+            <End Role="test_results" EntitySet="test_results" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__patients__test_t__403A8C7D" Association="Self.FK__patients__test_t__403A8C7D">
+            <End Role="test_types" EntitySet="test_types" />
+            <End Role="patients" EntitySet="patients" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__patie__4316F928" Association="Self.FK__test_resu__patie__4316F928">
+            <End Role="patients" EntitySet="patients" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__test___440B1D61" Association="Self.FK__test_resu__test___440B1D61">
+            <End Role="test_types" EntitySet="test_types" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK__test_resu__user___44FF419A" Association="Self.FK__test_resu__user___44FF419A">
+            <End Role="users" EntitySet="users" />
+            <End Role="test_results" EntitySet="test_results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="EhealthContext">
+          <EntitySetMapping Name="appointments">
+            <EntityTypeMapping TypeName="Model.appointment">
+              <MappingFragment StoreEntitySet="appointments">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="apptDate" ColumnName="apptDate" />
+                <ScalarProperty Name="apptStartTime" ColumnName="apptStartTime" />
+                <ScalarProperty Name="apptEndTime" ColumnName="apptEndTime" />
+                <ScalarProperty Name="isCancelled" ColumnName="isCancelled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doctors">
+            <EntityTypeMapping TypeName="Model.doctor">
+              <MappingFragment StoreEntitySet="doctors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="doctorName" ColumnName="doctorName" />
+                <ScalarProperty Name="speciality_id" ColumnName="speciality_id" />
+                <ScalarProperty Name="availableTime" ColumnName="availableTime" />
+                <ScalarProperty Name="availableDate" ColumnName="availableDate" />
+                <ScalarProperty Name="doctorContact" ColumnName="doctorContact" />
+                <ScalarProperty Name="doctorEmail" ColumnName="doctorEmail" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="histories">
+            <EntityTypeMapping TypeName="Model.history">
+              <MappingFragment StoreEntitySet="histories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="patientNhsNo" ColumnName="patientNhsNo" />
+                <ScalarProperty Name="historyDetails" ColumnName="historyDetails" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hospitals">
+            <EntityTypeMapping TypeName="Model.hospital">
+              <MappingFragment StoreEntitySet="hospital">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hospitalName" ColumnName="hospitalName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="patients">
+            <EntityTypeMapping TypeName="Model.patient">
+              <MappingFragment StoreEntitySet="patients">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="patientNhsNo" ColumnName="patientNhsNo" />
+                <ScalarProperty Name="patientName" ColumnName="patientName" />
+                <ScalarProperty Name="patientContact" ColumnName="patientContact" />
+                <ScalarProperty Name="patientEmail" ColumnName="patientEmail" />
+                <ScalarProperty Name="patientDob" ColumnName="patientDob" />
+                <ScalarProperty Name="patientAddress" ColumnName="patientAddress" />
+                <ScalarProperty Name="hospital_id" ColumnName="hospital_id" />
+                <ScalarProperty Name="arrivalTime" ColumnName="arrivalTime" />
+                <ScalarProperty Name="arrivalDate" ColumnName="arrivalDate" />
+                <ScalarProperty Name="history_id" ColumnName="history_id" />
+                <ScalarProperty Name="test_result_id" ColumnName="test_result_id" />
+                <ScalarProperty Name="test_type_id" ColumnName="test_type_id" />
+                <ScalarProperty Name="doctor_id" ColumnName="doctor_id" />
+                <ScalarProperty Name="followUps" ColumnName="followUps" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="specialities">
+            <EntityTypeMapping TypeName="Model.speciality">
+              <MappingFragment StoreEntitySet="specialities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="specialityName" ColumnName="specialityName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test_results">
+            <EntityTypeMapping TypeName="Model.test_results">
+              <MappingFragment StoreEntitySet="test_results">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="patient_id" ColumnName="patient_id" />
+                <ScalarProperty Name="patientNhsNo" ColumnName="patientNhsNo" />
+                <ScalarProperty Name="test_type_id" ColumnName="test_type_id" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test_types">
+            <EntityTypeMapping TypeName="Model.test_types">
+              <MappingFragment StoreEntitySet="test_types">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="testName" ColumnName="testName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="Model.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
